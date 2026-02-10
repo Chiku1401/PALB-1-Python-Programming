@@ -1,4 +1,4 @@
-// Given an array arr[]. Your task is to find the minimum and maximum elementsin the array.
+#Given an array arr[]. Your task is to find the minimum and maximum elementsin the array.
 
 class Solution:
     def getMinMax(self, arr):
