@@ -4,21 +4,25 @@
 #You must solve the problem without modifying the array nums and using only constant extra space.
 
 class Solution:
-    def findDuplicate(self, nums: list[int]) -> int:
-        # Phase 1: Finding the intersection point in the cycle
-        slow = nums[0]
-        fast = nums[0]
+    def minDifference(self, arr):
+        # Convert time to seconds
+        times = []
+        for t in arr:
+            h, m, s = map(int, t.split(":"))
+            total = h * 3600 + m * 60 + s
+            times.append(total)
         
-        while True:
-            slow = nums[slow]
-            fast = nums[nums[fast]]
-            if slow == fast:
-                break
+        # Sort times
+        times.sort()
         
-        # Phase 2: Finding the entrance to the cycle (the duplicate)
-        slow = nums[0]
-        while slow != fast:
-            slow = nums[slow]
-            fast = nums[fast]
-            
-        return slow
+        # Find minimum difference
+        ans = float('inf')
+        
+        for i in range(1, len(times)):
+            ans = min(ans, times[i] - times[i-1])
+        
+        # Circular difference (last to first)
+        day = 24 * 3600
+        ans = min(ans, day - times[-1] + times[0])
+        
+        return ans

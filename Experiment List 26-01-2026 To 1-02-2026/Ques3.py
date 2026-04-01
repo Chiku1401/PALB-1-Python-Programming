@@ -1,29 +1,21 @@
-#You are given an array arr[] of non-negative numbers. Each number tells you the maximum number of steps you can jump forward from that position.
+#Given a string s consisting of balanced parentheses, calculate the score of the string based on the following rules:
+#"O" has a score of 1.
+#"AB" has a score of A + B, where A and B are balanced parentheses strings.
+#'(A)" has a score of 2 × score(A), where A is a balanced parentheses string.
+
 
 class Solution:
-    def mergeArrays(self, a, b):
-        n = len(a)
-        m = len(b)
+    def scoreOfParentheses(self, s):
+        stack = [0]
         
-        # 1. Initialize two pointers
-        # 'i' starts from the end of the first array (largest of a)
-        # 'j' starts from the beginning of the second array (smallest of b)
-        i = n - 1
-        j = 0
-        
-        # 2. Compare elements and swap if they are in the wrong order
-        # We want all elements in 'a' to be smaller than elements in 'b'
-        while i >= 0 and j < m:
-            if a[i] > b[j]:
-                # Swap the larger element from 'a' with the smaller element from 'b'
-                a[i], b[j] = b[j], a[i]
-                i -= 1
-                j += 1
+        for ch in s:
+            if ch == '(':
+                stack.append(0)
             else:
-                # Since both arrays are sorted, if a[i] <= b[j], 
-                # then all elements before 'i' are already smaller than all after 'j'
-                break
+                val = stack.pop()
+                if val == 0:
+                    stack[-1] += 1
+                else:
+                    stack[-1] += 2 * val
         
-        # 3. Sort both arrays individually to maintain internal order
-        a.sort()
-        b.sort()
+        return stack[0]

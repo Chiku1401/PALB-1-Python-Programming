@@ -1,24 +1,24 @@
-#Given an integer array arr[] and an integer k, your task is to find and return the kth smallest element in the given array.
-#Note: The kth smallest element is determined based on the sorted order of the array.
+#You are given two binary strings s1 and s2 of equal length, and the task is to find
+#the minimum number of swaps required to make them identical. The only allowed
+#operation is swapping characters between the two strings (i.e., you can
+#swap s1[i] with s2[j], but not within the same string). If it is impossible to make the two
+#strings equal through such swaps, return -1.
 
-import heapq
 
 class Solution:
-    def kthSmallest(self, arr, k):
-        """
-        arr : given array
-        k : find the kth smallest element
-        """
-        # Create a max heap to store the k smallest elements seen so far
-        # We use negative values because Python's heapq is a min-heap
-        max_heap = []
+    def minSwaps(self, s1, s2):
+        xy = 0  # s1[i] = 0, s2[i] = 1
+        yx = 0  # s1[i] = 1, s2[i] = 0
         
-        for num in arr:
-            heapq.heappush(max_heap, -num)
-            
-            # If the heap size exceeds k, remove the largest element
-            if len(max_heap) > k:
-                heapq.heappop(max_heap)
+        for i in range(len(s1)):
+            if s1[i] == '0' and s2[i] == '1':
+                xy += 1
+            elif s1[i] == '1' and s2[i] == '0':
+                yx += 1
         
-        # The root of the max_heap is the kth smallest element
-        return -max_heap[0]
+        # If total mismatches is odd → impossible
+        if (xy + yx) % 2 != 0:
+            return -1
+        
+        # Swaps calculation
+        return (xy // 2) + (yx // 2) + 2 * (xy % 2)
